@@ -19,7 +19,7 @@ export function getMetricMetaInfo(metric) {
       getIcon(){
         return
         <View>
-          <MaterialCommunityIcons name="run" color={white} size={35} />
+          <MaterialIcons name="directions-run" color={white} size={35} />
         </View>
       }
     },
@@ -60,7 +60,7 @@ export function getMetricMetaInfo(metric) {
       getIcon(){
         return
         <View>
-          <MaterialCommunityIcons name="bed" color={white} size={30} />
+          <FontAwesome name="bed" color={white} size={30} />
         </View>
       }
 
@@ -81,6 +81,7 @@ export function getMetricMetaInfo(metric) {
     }
 
   }
+  return typeof metric === "undefined" ? info : info[metric]
 }
 
 export function isBetween (num, x, y) {
