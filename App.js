@@ -6,7 +6,7 @@ import AddEntry from './components/AddEntry';
 export default function App() {
   return (
     <View style={styles.container}>
-      <AddEntry />
+      <AddEntry alreadyLogged={true}/>
       <StatusBar style="auto" />
     </View>
   );

@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
+import { submitEntry, removeEntry } from '../utils/api'
 import UdaciSlider from './UdaciSlider'
 import UdaciSteppers from './UdaciSteppers'
 import DateHeader from './DateHeader'
+import { IonIcons } from '@expo/vector-icons'
+import TextButton from './TextButton'
 
 function SubmitBtn ({ onPress }) {
     return (
@@ -34,6 +37,8 @@ export default class AddEntry extends Component {
             sleep: 0,
             eat: 0,
         }))
+
+        submitEntry({ key, entry })
     }
 
     increment = (metric) => {
@@ -68,8 +73,26 @@ export default class AddEntry extends Component {
         }))
     }
 
+    reset = () => {
+        const key = timeToString()
+
+        removeEntry(key)
+    }
+
     render(){
         const metaInfo = getMetricMetaInfo()
+
+        {/*
+        if (this.props.alreadyLogged) {
+            return(
+                <View>
+                    <IonIcons name={'ios-md'} size={100} />
+                    <Text>You already logged your information for today</Text>
+                    <TextButton onPress={this.reset}>Reset</TextButton>
+
+                </View>    
+            )
+        }*/}
 
         return (
             <View>
