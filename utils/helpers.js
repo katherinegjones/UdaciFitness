@@ -1,81 +1,104 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import {
   FontAwesome,
   MaterialIcons,
   MaterialCommunityIcons
 }
 from "@expo/vector-icons"
-import { white } from './colors'
+import { white, orange, blue, lightPurp, red, pink } from './colors'
+
+const styles = StyleSheet.create({
+  iconContainer: {
+    padding: 5,
+    borderRadius: 8,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+})
+
+export function getDailyReminderValue () {
+  return {
+    today: "Don't forget to log your info for today!"
+  }
+}
 
 export function getMetricMetaInfo(metric) {
   const info = {
     run: {
       displayName: "Run",
-      max: "50",
+      max: 50,
       unit: "miles",
       step: 1,
       type: "steppers",
       getIcon(){
-        return
-        <View>
+        return(
+        <View style={[styles.iconContainer, {backgroundColor: red}]}>
           <MaterialIcons name="directions-run" color={white} size={35} />
         </View>
+        )
       }
     },
     bike: {
       displayName: "Bike",
-      max: "100",
+      max: 100,
       unit: "miles",
       step: 1,
       type: "steppers",
       getIcon(){
-        return
-        <View>
+        return(
+        <View style={[styles.iconContainer, {backgroundColor: orange}]}>
           <MaterialCommunityIcons name="bike" color={white} size={32} />
         </View>
+        )
       }
 
     },
     swim: {
       displayName: "Swim",
-      max: "9900",
+      max: 9900,
       unit: "meters",
       step: 100,
       type: "steppers",
       getIcon(){
-        return
-        <View>
+        return(
+        <View style={[styles.iconContainer, {backgroundColor: blue}]}>
           <MaterialCommunityIcons name="swim" color={white} size={35} />
         </View>
+        )
       }
 
     },
     sleep: {
       displayName: "Sleep",
-      max: "24",
+      max: 24,
       unit: "hours",
       step: 1,
       type: "slider",
       getIcon(){
-        return
-        <View>
+        return(
+        <View style={[styles.iconContainer, {backgroundColor: lightPurp}]}>
           <FontAwesome name="bed" color={white} size={30} />
         </View>
+        )
       }
 
     },
     eat: {
       displayName: "Eat",
-      max: "10",
+      max: 10,
       unit: "rating",
       step: 1,
       type: "slider",
       getIcon(){
-        return
-        <View>
+        return(
+        <View style={[styles.iconContainer, {backgroundColor: pink}]}>
           <MaterialCommunityIcons name="food" color={white} size={32} />
         </View>
+        )
       }
 
     }
