@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
@@ -21,44 +22,53 @@ function UdaciStatusBar({backgroundColor, ...props}){
   )
 }
 
+
 const Tab = 
   Platform.OS === 'ios'
   ? createBottomTabNavigator()
   : createMaterialTopTabNavigator()
+
+const RouteConfigs = {
+  History: {
+    name: 'History',
+    component: History,
+    options: {tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />, title: 'History'}
+  },
+  AddEntry: {
+    name: 'AddEntry',
+    component: AddEntry,
+    options: {tabBarIcon: ({tintColor}) => <Ionicons name='plus-square' size={30} color={tintColor}/>, title: 'AddEntry'}
+  }
+}
+
+const TabNavigatorConfig = {
+  navigationOptions: {
+    header: null
+  },
+  tabBarOptions: {
+    activeTintColor: Platform.OS === 'ios' ? purple : white,
+    style: {
+      height: 56,
+      backgroundColor: Platform.OS === 'ios' ? white : purple,
+      shadowColor: 'rgba(0, 0, 0, 0.24)',
+      shadowOffset: {
+        width: 0,
+        height: 3
+      },
+      shadowRadius: 6,
+      shadowOpacity: 1
+    }
+  }
+}
 
 export default function App() {
   return (
     <Provider store={createStore(reducer)}>
       <UdaciStatusBar backgroundColor={purple} style='light'/>
       <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
-              let icon
-              if (route.name === 'Add Entry') {
-                icon= (
-                  <FontAwesome name='plus-square' size={size} color = {color} />
-                )
-              } else if (route.name === 'History') {
-                icon = (
-                  <Ionicons name = 'ios-bookmarks' size={size} color={color} />
-                )
-              }
-              return icon
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: Platform.OS === 'ios' ? purple : white,
-            style: {
-              backgroundColor: Platform.OS === 'ios' ? white : purple,
-            },
-            indicatorStyle: {
-              backgroundColor: 'yellow',
-            }
-          }}
-        >
-          <Tab.Screen name='History' component={History} />
-          <Tab.Screen name='Add Entry' component={AddEntry} />
+        <Tab.Navigator {...TabNavigatorConfig}>
+          <Tab.Screen {...RouteConfigs['History']} />
+          <Tab.Screen {...RouteConfigs['AddEntry']} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
