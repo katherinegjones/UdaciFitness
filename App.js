@@ -1,15 +1,17 @@
 import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createStackNavigator, HeaderStyleInterpolators } from '@react-navigation/stack'
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import AddEntry from './components/AddEntry';
 import History from './components/History'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux';
 import reducer from './reducers'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { purple, white } from './utils/colors'
 import Constants from 'expo-constants'
@@ -27,6 +29,46 @@ const Tab =
   Platform.OS === 'ios'
   ? createBottomTabNavigator()
   : createMaterialTopTabNavigator()
+
+
+const TabNav = () => (
+  <Tab.Navigator {...TabNavigatorConfig}>
+    <Tab.Screen {...RouteConfigs['History']} />
+    <Tab.Screen {...RouteConfigs['AddEntry']} />
+  </Tab.Navigator>
+)
+
+const StackNavigatorConfigs = {
+  headerMode: 'screen'
+}
+
+const StackConfig = {
+  TabNav: {
+    nav: 'Home',
+    component: TabNav,
+    options: {headerShown: false}
+  },
+  EntryDetail : {
+    name: 'EntryDetail',
+    component: EntryDetail,
+    options: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      },
+      title: 'Entry Detail'
+    }
+  }
+}
+
+const stack = createStackNavigator()
+
+const MainNav = () => (
+  <Stack.Navigator {...StackNavigatorConfigs}>
+    <Stack.Screen {...StackConfig['TabNav']}/>
+    <Stack.Screen {...StackConfig['EntryDetail']}/>
+  </Stack.Navigator>
+)
 
 const RouteConfigs = {
   History: {
@@ -66,10 +108,7 @@ export default function App() {
     <Provider store={createStore(reducer)}>
       <UdaciStatusBar backgroundColor={purple} style='light'/>
       <NavigationContainer>
-        <Tab.Navigator {...TabNavigatorConfig}>
-          <Tab.Screen {...RouteConfigs['History']} />
-          <Tab.Screen {...RouteConfigs['AddEntry']} />
-        </Tab.Navigator>
+       
       </NavigationContainer>
     </Provider>
   );
