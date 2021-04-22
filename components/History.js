@@ -4,11 +4,11 @@ import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native
 import { receiveEntries, addEntry } from '../actions'
 import { timeToString, getDailyReminderValue } from '../utils/helpers'
 import { fetchCalendarResults } from '../utils/api'
-import UdaciFitnessCalendar from 'udacifitness-calendar'
+import UdaciFitnessCalendar from 'udacifitness-calendar-fix'
 import { white } from '../utils/colors'
 import DateHeader from './DateHeader'
 import MetricCard from './MetricCard'
-import EntryDetail from './EntryDetail'
+import { EntryDetail } from './EntryDetail'
 import AppLoading from 'expo-app-loading'
 
 class History extends Component {
@@ -34,7 +34,10 @@ class History extends Component {
     renderItem = ({ today, ...metrics }, formattedDate, key) => {
         <View style={styles.item}>
             {today
-            ? <View>
+            ?<Text>{JSON.stringify(today)}</Text> 
+            :<Text>{JSON.stringify(metrics)}</Text>
+    }
+            {/*<View>
                 <DateHeader date={formattedDate} />
                 <Text style={styles.noDataText}>{today}</Text>
             </View>
@@ -44,6 +47,7 @@ class History extends Component {
             )}>
                 <MetricCard date={formattedDate} metrics={metrics}/>
                 </TouchableOpacity>}
+            */}
         </View>
     }
 
@@ -58,6 +62,8 @@ class History extends Component {
     render(){
         const { entries } = this.props
         const { ready } = this.state
+
+        console.log(entries)
 
         if (ready === false){
             return <AppLoading />

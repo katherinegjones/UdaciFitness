@@ -8,6 +8,7 @@ import { createStackNavigator, HeaderStyleInterpolators } from '@react-navigatio
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import AddEntry from './components/AddEntry';
 import History from './components/History'
+import EntryDetail from './components/EntryDetail'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux';
 import reducer from './reducers'
@@ -44,11 +45,11 @@ const StackNavigatorConfigs = {
 
 const StackConfig = {
   TabNav: {
-    nav: 'Home',
+    name: 'Home',
     component: TabNav,
     options: {headerShown: false}
   },
-  EntryDetail : {
+  EntryDetail: {
     name: 'EntryDetail',
     component: EntryDetail,
     options: {
@@ -61,7 +62,7 @@ const StackConfig = {
   }
 }
 
-const stack = createStackNavigator()
+const Stack = createStackNavigator()
 
 const MainNav = () => (
   <Stack.Navigator {...StackNavigatorConfigs}>
@@ -79,7 +80,7 @@ const RouteConfigs = {
   AddEntry: {
     name: 'AddEntry',
     component: AddEntry,
-    options: {tabBarIcon: ({tintColor}) => <Ionicons name='plus-square' size={30} color={tintColor}/>, title: 'AddEntry'}
+    options: {tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor}/>, title: 'AddEntry'}
   }
 }
 
@@ -106,10 +107,12 @@ const TabNavigatorConfig = {
 export default function App() {
   return (
     <Provider store={createStore(reducer)}>
-      <UdaciStatusBar backgroundColor={purple} style='light'/>
-      <NavigationContainer>
-       
-      </NavigationContainer>
+      <View style={{flex: 1}}>
+        <UdaciStatusBar backgroundColor={purple} style='light'/>
+        <NavigationContainer>
+        <MainNav />
+        </NavigationContainer>
+      </View>
     </Provider>
   );
 }
